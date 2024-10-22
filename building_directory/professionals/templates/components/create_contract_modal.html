@@ -1,0 +1,38 @@
+<!-- components/create_contract_modal.html -->
+<div class="modal fade" id="createContractModal" tabindex="-1" role="dialog" aria-labelledby="createContractModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="createContractModalLabel">Créer un contrat avec {{ professional.full_name }}</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" action="{% url 'create_contract' professional.id %}">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="start_date" class="form-label">Date de début</label>
+                        <input type="date" class="form-control" id="start_date" name="start_date" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="end_date" class="form-label">Date de fin</label>
+                        <input type="date" class="form-control" id="end_date" name="end_date" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Description</label>
+                        <textarea class="form-control" id="description" name="description" rows="3" required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="payment_status" class="form-label">Statut de paiement</label>
+                        <select class="form-control" id="payment_status" name="payment_status">
+                            <option value="pending">En attente</option>
+                            <option value="paid">Payé</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Créer le contrat</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

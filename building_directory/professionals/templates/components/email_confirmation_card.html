@@ -1,0 +1,31 @@
+{% load static %}
+
+<div class="bg-white overflow-hidden shadow rounded-lg">
+    <div class="p-6">
+        <div class="flex items-center">
+            <div class="flex-shrink-0 bg-indigo-500 rounded-md p-3">
+                <img src="{% static 'images/email-icon.svg' %}" alt="Email confirmation icon" class="h-6 w-6 text-white">
+            </div>
+            <div class="ml-5 w-0 flex-1">
+                <h2 class="text-2xl font-medium text-gray-900">Confirmation d'e-mail envoyée</h2>
+            </div>
+        </div>
+
+        <div class="mt-6">
+            <p>Un e-mail de confirmation a été envoyé à l'adresse que vous avez fournie. Veuillez vérifier votre boîte de réception pour activer votre compte.</p>
+            <p class="mt-2">Si vous n'avez pas reçu l'e-mail, veuillez vérifier vos dossiers de spam ou cliquez sur le bouton ci-dessous pour renvoyer l'e-mail de confirmation.</p>
+        </div>
+
+        <div class="mt-8 flex justify-center space-x-4">
+            <a href="{% url 'index' %}" class="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700">
+                Retour à l'acceuil
+            </a>
+            <form action="{% url 'resend_confirmation_email' %}" method="post" class="inline">
+                {% csrf_token %}
+                <button type="submit" class="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-indigo-700 bg-indigo-100 hover:bg-indigo-200">
+                    Renvoyer l'e-mail
+                </button>
+            </form>
+        </div>
+    </div>
+</div>

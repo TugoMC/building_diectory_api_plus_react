@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ portfolio.project_title }} - Détails du projet{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+    <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
+        <div class="px-4 py-5 sm:px-6">
+            <h3 class="text-lg leading-6 font-medium text-gray-900">
+                Détails du projet
+            </h3>
+            <p class="mt-1 max-w-2xl text-sm text-gray-500">
+                Informations détaillées sur le projet de portfolio.
+            </p>
+        </div>
+        <div class="border-t border-gray-200">
+            <dl>
+                <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt class="text-sm font-medium text-gray-500">
+                        Titre du projet
+                    </dt>
+                    <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                        {{ portfolio.project_title }}
+                    </dd>
+                </div>
+                <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt class="text-sm font-medium text-gray-500">
+                        Professionnel
+                    </dt>
+                    <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                        {{ portfolio.professional.full_name }}
+                    </dd>
+                </div>
+                <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt class="text-sm font-medium text-gray-500">
+                        Description du projet
+                    </dt>
+                    <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                        {{ portfolio.project_description }}
+                    </dd>
+                </div>
+                {% if portfolio.project_image %}
+                <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt class="text-sm font-medium text-gray-500">
+                        Image du projet
+                    </dt>
+                    <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                        <img src="{{ portfolio.project_image.url }}" alt="{{ portfolio.project_title }}" class="max-w-full h-auto rounded-lg shadow-md">
+                    </dd>
+                </div>
+                {% endif %}
+            </dl>
+        </div>
+    </div>
+    <div class="mt-6 flex justify-between">
+        <a href="{% url 'professional_detail' portfolio.professional.id %}" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+            Retour au profil du professionnel
+        </a>
+    </div>
+</div>
+{% endblock %}

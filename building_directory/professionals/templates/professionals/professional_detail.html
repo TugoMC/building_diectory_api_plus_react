@@ -1,0 +1,287 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}{{ professional.full_name }} - Détails{% endblock %}
+{% block content %}
+
+<div class="bg-gray-100 min-h-screen">
+    <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+        <div class="md:flex md:items-center md:justify-between mb-6">
+            <div class="flex-1 min-w-0">
+                <h1 id="professional.full_name" class="text-3xl font-bold leading-tight text-gray-900">
+                    {{ professional.full_name }}
+                </h1>
+            </div>
+
+            <div class="mt-4 flex md:mt-0 md:ml-4">
+                {% if user.is_authenticated %}
+<button id="createContractBtn" class="ml-3 inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+    Créer un contrat
+</button>
+{% else %}
+<p class="ml-3 text-sm text-gray-600">
+    <a href="{% url 'authapp:login' %}" class="font-medium text-indigo-600 hover:text-indigo-500">Connectez-vous</a> pour créer un contrat
+</p>
+{% endif %}
+
+<!-- Modal pour les informations manquantes -->
+<div id="missingInfoModal" class="fixed z-10 inset-0 overflow-y-auto hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+    <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+        <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
+        <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+        <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+            <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                <div class="sm:flex sm:items-start">
+                    <div class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
+                        <svg class="h-6 w-6 text-red-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                        </svg>
+                    </div>
+                    <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                        <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">
+                            Informations manquantes
+                        </h3>
+                        <div class="mt-2">
+                            <p class="text-sm text-gray-500">
+                                Veuillez compléter votre profil avant de créer un contrat. Il manque les informations suivantes :
+                            </p>
+                            <ul id="missingInfoList" class="list-disc list-inside text-sm text-gray-500 mt-2">
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                <a href="{% url 'profile' %}" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm">
+                    Compléter mon profil
+                </a>
+                <button type="button" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm" onclick="closeMissingInfoModal()">
+                    Fermer
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+            </div>
+        </div>
+
+        <div class="md:grid md:grid-cols-3 md:gap-6">
+            <div class="md:col-span-1">
+                
+                <!-- Composant pour la photo -->
+                {% include "components/professional_photo.html" with professional=professional %}
+
+                {% include "components/professional_info_card.html" with professional=professional %}
+            </div>
+
+            
+
+            <div class="mt-5 md:mt-0 md:col-span-2">
+                <div class="shadow sm:rounded-md sm:overflow-hidden">
+                    <div class="px-4 py-5 bg-white space-y-6 sm:p-6">
+                        <!-- Composant pour la vidéo -->
+                        {% include "components/professional_video.html" with professional=professional %}
+                    </div>
+                </div>
+                <div class="md:col-span-1">
+            
+                    {% include "components/certifications.html" with professional=professional %}
+                </div>
+                <div class="md:col-span-1">
+                    <div class="mt-4 bg-white shadow overflow-hidden sm:rounded-lg">
+                        <div class="px-4 py-5 sm:px-6">
+                <div>
+                    <h3 class="text-lg leading-6 font-medium text-gray-900">Portfolios</h3>
+                    {% if professional.portfolios.all %}
+                    <div class="mt-2 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+                        {% for portfolio in professional.portfolios.all %}
+                        {% include "components/portfolio_card.html" with portfolio=portfolio %}
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    <p>Aucun projet disponible pour le moment.</p>
+                    {% endif %}
+                </div>  
+            </div>
+        </div>
+                <div class="md:col-span-1">
+                    <div class="mt-4 bg-white shadow overflow-hidden sm:rounded-lg">
+                        <div class="px-4 py-5 sm:px-6">
+                    <h3 class="text-lg leading-6 font-medium text-gray-900">Avis</h3>
+                    {% if professional.reviews.all %}
+                    <div class="mt-2 space-y-4">
+                        {% for review in professional.reviews.all %}
+                        {% include "components/review_card.html" with review=review %}
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    <p>Aucun avis pour ce professionnel.</p>
+                    {% endif %}
+                </div>
+            </div>
+                
+            </div>
+        </div>
+
+        <div class="mt-4 bg-white shadow overflow-hidden sm:rounded-lg">
+            <div class="px-4 py-5 sm:px-6">
+                <h3 class="text-lg leading-6 font-medium text-gray-900">
+                    Contrats en cours
+                </h3>
+            </div>
+            <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
+                {% if current_contracts %}
+                    <ul class="divide-y divide-gray-200">
+                        {% for contract in current_contracts %}
+                            <li class="py-4 sm:py-5 sm:px-6">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <p class="text-sm font-medium text-gray-900">
+                                            Contrat #{{ contract.id }}
+                                        </p>
+                                        <p class="text-sm text-gray-500">
+                                            Du {{ contract.start_date|date:"d/m/Y" }} au {{ contract.end_date|date:"d/m/Y" }}
+                                        </p>
+                                    </div>
+                                    <div class="text-sm text-gray-500">
+                                        {% if contract.start_date <= today and contract.end_date >= today %}
+                                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                                En cours
+                                            </span>
+                                        {% elif contract.start_date > today %}
+                                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">
+                                                À venir
+                                            </span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p class="text-sm text-gray-500 sm:px-6 py-4">Aucun contrat en cours pour ce professionnel.</p>
+                {% endif %}
+            </div>
+        </div>
+
+        {% if user.is_authenticated %}
+        <div class="mt-8">
+            <h2 class="text-2xl font-semibold text-gray-900 mb-4">Vos contrats avec ce professionnel</h2>
+            {% if user_contracts %}
+            <div class="space-y-4">
+                {% for contract in user_contracts %}
+                <div class="bg-white shadow overflow-hidden sm:rounded-lg">
+                    <div class="px-4 py-5 sm:px-6">
+                        <h3 class="text-lg leading-6 font-medium text-gray-900">Contrat #{{ contract.id }}</h3>
+                        <p class="mt-1 max-w-2xl text-sm text-gray-500">Créé le {{ contract.created_at }}</p>
+                    </div>
+                    <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
+                        <dl class="sm:divide-y sm:divide-gray-200">
+                            <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                                <dt class="text-sm font-medium text-gray-500">Statut</dt>
+                                <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {% if contract.status == 'requested' %}bg-yellow-100 text-yellow-800{% elif contract.status == 'active' %}bg-green-100 text-green-800{% elif contract.status == 'completed' %}bg-blue-100 text-blue-800{% else %}bg-red-100 text-red-800{% endif %}">
+                                        {{ contract.status|title }}
+                                    </span>
+                                </dd>
+                            </div>
+
+                            <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                                <dt class="text-sm font-medium text-gray-500">Description</dt>
+                                <p>{{ contract.description }}</p>
+                            </div>
+                            
+                            <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                                <dt class="text-sm font-medium text-gray-500">Actions</dt>
+                                <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                                    <a href="{% url 'contract_detail' contract.id %}" class="text-indigo-600 hover:text-indigo-900">Voir les détails</a>
+                                </dd>
+                            </div>
+                        </dl>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <p>Vous n'avez aucun contrat avec ce professionnel.</p>
+            {% endif %}
+        </div>
+        {% else %}
+        <div class="mt-8 bg-white shadow overflow-hidden sm:rounded-lg">
+            <div class="px-4 py-5 sm:p-6">
+                <h3 class="text-lg leading-6 font-medium text-gray-900">Contrats</h3>
+                <div class="mt-2 max-w-xl text-sm text-gray-500">
+                    <p>Connectez-vous pour voir vos contrats avec ce professionnel ou en créer un nouveau.</p>
+                </div>
+                <div class="mt-5">
+                    <a href="{% url 'authapp:login' %}" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                        Se connecter
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const createContractBtn = document.getElementById('createContractBtn');
+        if (createContractBtn) {
+            createContractBtn.addEventListener('click', checkUserInfo);
+        }
+    });
+    
+    function checkUserInfo(event) {
+        event.preventDefault();
+        
+        // Récupérer les informations de l'utilisateur (vous devrez les passer du backend)
+        const userInfo = {
+            last_name: '{{ user.userprofile.last_name }}',
+            first_name: '{{ user.userprofile.first_name }}',
+            phone_number: '{{ user.userprofile.phone_number }}',
+            profession: '{{ user.userprofile.profession }}',
+            city: '{{ user.userprofile.city }}',
+            commune: '{{ user.userprofile.commune }}'
+        };
+    
+        const missingInfo = [];
+        if (!userInfo.last_name) missingInfo.push('Nom');
+        if (!userInfo.first_name) missingInfo.push('Prénom');
+        
+        // Vérification améliorée du numéro de téléphone
+        const cleanPhoneNumber = userInfo.phone_number.replace(/\D/g, ''); // Supprime tous les caractères non-numériques
+        if (!userInfo.phone_number || cleanPhoneNumber.length < 10) {
+            missingInfo.push('Numéro de téléphone valide');
+        }
+        
+        if (!userInfo.profession) missingInfo.push('Profession');
+        if (!userInfo.city) missingInfo.push('Ville');
+        if (!userInfo.commune) missingInfo.push('Commune');
+    
+        if (missingInfo.length > 0) {
+            showMissingInfoModal(missingInfo);
+        } else {
+            // Rediriger vers la page de création de contrat
+            window.location.href = "{% url 'create_contract' professional.id %}";
+        }
+    }
+    
+    function showMissingInfoModal(missingInfo) {
+        const modal = document.getElementById('missingInfoModal');
+        const missingInfoList = document.getElementById('missingInfoList');
+        
+        missingInfoList.innerHTML = missingInfo.map(info => `<li>${info}</li>`).join('');
+        
+        modal.classList.remove('hidden');
+    }
+    
+    function closeMissingInfoModal() {
+        const modal = document.getElementById('missingInfoModal');
+        modal.classList.add('hidden');
+    }
+    </script>
+    
+{% endblock %}

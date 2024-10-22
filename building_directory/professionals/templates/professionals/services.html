@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Nos Services - ExpertHub{% endblock %}
+{% block content %}
+<div class="bg-gradient-to-b from-indigo-50 to-white">
+    <div class="container mx-auto px-4 py-16">
+      <h1 class="text-5xl font-extrabold text-indigo-800 text-center mb-8">Nos Services</h1>
+      <p class="text-xl text-gray-700 text-center mb-16 max-w-3xl mx-auto">
+        Chez ExpertHub, nous offrons une gamme complète de services pour tous vos besoins en construction, rénovation et maintenance. Nos professionnels qualifiés sont prêts à donner vie à vos projets avec expertise et passion.
+      </p>
+  
+      <div class="space-y-12">
+        <!-- Service 1 : Rénovation -->
+        <div class="flex items-center">
+          <img src="/api/placeholder/64/64" alt="Rénovation" class="w-16 h-16 mr-6">
+          <div>
+            <h2 class="text-2xl font-semibold text-indigo-700">Rénovation</h2>
+            <p class="text-gray-600">Transformez votre espace avec nos services de rénovation sur mesure. De la conception à la réalisation, nous donnons vie à votre vision.</p>
+            <ul class="list-disc list-inside text-gray-600">
+              <li>Rénovation intérieure complète</li>
+              <li>Modernisation de cuisine et salle de bains</li>
+              <li>Optimisation d'espace</li>
+            </ul>
+          </div>
+        </div>
+  
+        <!-- Ajouter un séparateur -->
+        <hr class="border-gray-300">
+  
+        <!-- Service 2 : Construction -->
+        <div class="flex items-center">
+          <img src="/api/placeholder/64/64" alt="Construction" class="w-16 h-16 mr-6">
+          <div>
+            <h2 class="text-2xl font-semibold text-indigo-700">Construction</h2>
+            <p class="text-gray-600">Réalisez votre projet de construction avec confiance. Notre équipe gère chaque étape, de la planification à la livraison finale.</p>
+            <ul class="list-disc list-inside text-gray-600">
+              <li>Construction résidentielle et commerciale</li>
+              <li>Gestion de projet intégrale</li>
+              <li>Respect des normes et réglementations</li>
+            </ul>
+          </div>
+        </div>
+  
+        <!-- Ajouter un séparateur -->
+        <hr class="border-gray-300">
+  
+        <!-- Service 3 : Maintenance -->
+        <div class="flex items-center">
+          <img src="/api/placeholder/64/64" alt="Maintenance" class="w-16 h-16 mr-6">
+          <div>
+            <h2 class="text-2xl font-semibold text-indigo-700">Maintenance</h2>
+            <p class="text-gray-600">Préservez la valeur et la fonctionnalité de vos biens immobiliers avec nos services de maintenance professionnels.</p>
+            <ul class="list-disc list-inside text-gray-600">
+              <li>Maintenance préventive</li>
+              <li>Réparations rapides et efficaces</li>
+              <li>Gestion des installations</li>
+            </ul>
+          </div>
+        </div>
+  
+        <!-- Service 4 : Conseil et Gestion -->
+        <div class="flex items-center">
+          <img src="/api/placeholder/64/64" alt="Conseil et Gestion" class="w-16 h-16 mr-6">
+          <div>
+            <h2 class="text-2xl font-semibold text-indigo-700">Conseil et Gestion</h2>
+            <p class="text-gray-600">Optimisez vos projets avec notre expertise en gestion et nos conseils techniques pointus dans le domaine du bâtiment.</p>
+            <ul class="list-disc list-inside text-gray-600">
+              <li>Étude de faisabilité</li>
+              <li>Optimisation budgétaire</li>
+              <li>Suivi et coordination de projet</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+{% endblock %}

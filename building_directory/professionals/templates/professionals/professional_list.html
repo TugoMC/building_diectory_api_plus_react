@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="bg-gray-100 min-h-screen p-8">
+    <div class="max-w-7xl mx-auto">
+        <h1 class="text-3xl font-bold text-gray-900 mb-8">Liste des Experts</h1>
+
+        <div class="flex flex-col md:flex-row gap-8">
+            <!-- Sidebar avec filtres -->
+            <div class="w-full md:w-1/4">
+                <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+                    <h2 class="text-xl font-bold text-gray-900 mb-4">Filtres</h2>
+                    <form method="get" action="{% url 'professional_list' %}">
+                        <div class="mb-4">
+                            <label for="name" class="block text-sm font-medium text-gray-700">Nom</label>
+                            <input type="text" name="name" id="name" value="{{ name_filter }}" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="specialization" class="block text-sm font-medium text-gray-700">Spécialisation</label>
+                            <select name="specialization" id="specialization" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                                <option value="">Toutes les spécialisations</option>
+                                {% for specialization in unique_specializations %}
+                                    <option value="{{ specialization }}" {% if specialization == specialization_filter %}selected{% endif %}>{{ specialization }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="min_rating" class="block text-sm font-medium text-gray-700">Note minimale</label>
+                            <select name="min_rating" id="min_rating" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                                <option value="">Toutes les notes</option>
+                                <option value="1" {% if min_rating == '1' %}selected{% endif %}>1 étoile et plus</option>
+                                <option value="2" {% if min_rating == '2' %}selected{% endif %}>2 étoiles et plus</option>
+                                <option value="3" {% if min_rating == '3' %}selected{% endif %}>3 étoiles et plus</option>
+                                <option value="4" {% if min_rating == '4' %}selected{% endif %}>4 étoiles et plus</option>
+                                <option value="5" {% if min_rating == '5' %}selected{% endif %}>5 étoiles</option>
+                            </select>
+                        </div>
+
+                        <button type="submit" class="w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                            Appliquer les filtres
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Liste des professionnels -->
+            <div class="w-full md:w-3/4">
+                <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                    <div class="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
+                        <h2 class="text-xl font-bold text-gray-900">Nos Experts</h2>
+                        <span class="text-sm text-gray-500">{{ page_obj.paginator.count }} expert(s) trouvé(s)</span>
+                    </div>
+
+                    {% for professional in page_obj %}
+                        <div class="border-b border-gray-200 last:border-b-0">
+                            <div class="px-6 py-4 flex items-center space-x-4">
+                                <img src="{{ professional.profile_photo.url }}" alt="{{ professional.full_name }}" class="h-16 w-16 rounded-full object-cover">
+                                <div class="flex-1 min-w-0">
+                                    <p class="text-sm font-medium text-gray-900 truncate">
+                                        {{ professional.full_name }}
+                                    </p>
+                                    <p class="text-sm text-gray-500 truncate">
+                                        {{ professional.specialization }}
+                                    </p>
+                                    <div class="flex items-center mt-1">
+                                        {% for i in "12345"|make_list %}
+                                            <svg class="h-5 w-5 {% if forloop.counter <= professional.average_rating %}text-yellow-400{% else %}text-gray-300{% endif %}" fill="currentColor" viewBox="0 0 20 20">
+                                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                            </svg>
+                                        {% endfor %}
+                                        <span class="ml-2 text-sm text-gray-500">{{ professional.average_rating|floatformat:1 }}</span>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <p class="text-sm font-medium text-gray-900">{{ professional.daily_rate }} Francs CFA</p>
+                                    <p class="text-xs text-gray-500">/jour</p>
+                                    <a href="{% url 'professional_detail' professional.id %}" class="mt-2 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                        Voir le profil
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    {% empty %}
+                        <div class="px-6 py-4 text-center text-gray-500">
+                            Aucun professionnel trouvé. Veuillez ajuster vos critères de recherche.
+                        </div>
+                    {% endfor %}
+                </div>
+
+                <!-- Pagination -->
+                {% if page_obj.has_other_pages %}
+                    <nav class="px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6" aria-label="Pagination">
+                        <div class="hidden sm:block">
+                            <p class="text-sm text-gray-700">
+                                Affichage de <span class="font-medium">{{ page_obj.start_index }}</span> à <span class="font-medium">{{ page_obj.end_index }}</span> sur <span class="font-medium">{{ page_obj.paginator.count }}</span> résultats
+                            </p>
+                        </div>
+                        <div class="flex-1 flex justify-between sm:justify-end">
+                            {% if page_obj.has_previous %}
+                                <a href="?page={{ page_obj.previous_page_number }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}" class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+                                    Précédent
+                                </a>
+                            {% endif %}
+                            {% if page_obj.has_next %}
+                                <a href="?page={{ page_obj.next_page_number }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}" class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+                                    Suivant
+                                </a>
+                            {% endif %}
+                        </div>
+                    </nav>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,56 @@
+{% comment %}
+Enregistrez ce fichier comme `templates/components/feature_card.html`
+{% endcomment %}
+{% load static %}
+
+<div class="bg-white overflow-hidden shadow rounded-lg">
+    <div class="p-5">
+        <div class="flex items-center">
+            <div class="flex-shrink-0 bg-indigo-500 rounded-md p-3">
+                <img src="{% static icon %}" alt="{{ title }} icon" class="h-6 w-6 text-white">
+            </div>
+            <div class="ml-5 w-0 flex-1">
+                <dt class="text-lg font-medium text-gray-900 truncate">
+                    {{ title }}
+                </dt>
+                <dd class="mt-1 text-sm text-gray-500">
+                    {{ description }}
+                </dd>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% comment %}
+Enregistrez ce fichier comme `templates/components/pricing_card.html`
+{% endcomment %}
+
+<div class="bg-white overflow-hidden shadow rounded-lg divide-y divide-gray-200">
+    <div class="px-6 py-8">
+        <h3 class="text-2xl font-medium text-gray-900">{{ title }}</h3>
+        <p class="mt-4 text-5xl font-extrabold text-gray-900">{{ price }}</p>
+        <p class="mt-4 text-sm text-gray-500">{{ description }}</p>
+    </div>
+    <div class="px-6 py-8">
+        <h4 class="text-sm font-medium text-gray-900 tracking-wide uppercase">Ce qui est inclus</h4>
+        <ul class="mt-4 space-y-4">
+            {% for feature in features %}
+                <li class="flex items-start">
+                    <div class="flex-shrink-0">
+                        <svg class="h-6 w-6 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                    </div>
+                    <p class="ml-3 text-sm text-gray-700">{{ feature }}</p>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="px-6 py-8">
+        <div class="rounded-md shadow">
+            <a href="{{ cta_url }}" class="flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700">
+                {{ cta_text }}
+            </a>
+        </div>
+    </div>
+</div>

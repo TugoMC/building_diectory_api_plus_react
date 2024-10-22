@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Accueil - ExpertHub{% endblock %}
+
+{% block content %}
+<body class="bg-gray-100">
+
+    <main>
+        <!-- Hero Section -->
+        <section class="bg-indigo-700 text-white py-20">
+            <div class="container mx-auto px-6">
+                <div class="flex flex-col md:flex-row items-center">
+                    <div class="md:w-1/2 mb-10 md:mb-0">
+                        <h1 class="text-4xl md:text-5xl font-bold mb-4">Trouvez le bon professionnel du bâtiment</h1>
+                        <p class="text-xl mb-8">ExpertHub met en relation les particuliers et les entreprises avec des professionnels qualifiés du bâtiment.</p>
+                        <a href="{% url 'professional_list' %}" class="bg-white text-indigo-700 px-6 py-3 rounded-md font-semibold hover:bg-gray-100">Trouver un expert</a>
+                    </div>
+                    <div class="md:w-1/2">
+                        <img src="/api/placeholder/600/400" alt="Professionnels du bâtiment" class="rounded-lg shadow-xl">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section class="py-20">
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl font-bold text-center mb-12">Nos services</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="bg-white rounded-lg shadow-md p-6">
+                        <img src="/api/placeholder/64/64" alt="Rénovation" class="w-16 h-16 mx-auto mb-4">
+                        <h3 class="text-xl font-semibold text-center mb-2">Rénovation</h3>
+                        <p class="text-gray-600 text-center">Trouvez des experts pour tous vos projets de rénovation intérieure et extérieure.</p>
+                    </div>
+                    <div class="bg-white rounded-lg shadow-md p-6">
+                        <img src="/api/placeholder/64/64" alt="Construction" class="w-16 h-16 mx-auto mb-4">
+                        <h3 class="text-xl font-semibold text-center mb-2">Construction</h3>
+                        <p class="text-gray-600 text-center">Des professionnels qualifiés pour vos projets de construction résidentielle et commerciale.</p>
+                    </div>
+                    <div class="bg-white rounded-lg shadow-md p-6">
+                        <img src="/api/placeholder/64/64" alt="Maintenance" class="w-16 h-16 mx-auto mb-4">
+                        <h3 class="text-xl font-semibold text-center mb-2">Maintenance</h3>
+                        <p class="text-gray-600 text-center">Entretenez votre propriété avec l'aide de nos experts en maintenance.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- How it works Section -->
+        <section class="bg-gray-100 py-20">
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl font-bold text-center mb-12">Comment ça marche</h2>
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <div class="md:w-1/4 text-center mb-8 md:mb-0">
+                        <div class="bg-indigo-600 text-white rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">1</div>
+                        <h3 class="text-xl font-semibold mb-2">Choisissez votre expert</h3>
+                        <p class="text-gray-600">Sélectionnez le professionnel qui correspond le mieux à vos besoins.</p>
+                    </div>
+                    <div class="md:w-1/4 text-center mb-8 md:mb-0">
+                        <div class="bg-indigo-600 text-white rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">2</div>
+                        <h3 class="text-xl font-semibold mb-2">Décrivez votre projet</h3>
+                        <p class="text-gray-600">Expliquez vos besoins et vos attentes pour votre projet.</p>
+                    </div>
+                    <div class="md:w-1/4 text-center">
+                        <div class="bg-indigo-600 text-white rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">3</div>
+                        <h3 class="text-xl font-semibold mb-2">Réalisez votre projet</h3>
+                        <p class="text-gray-600">Travaillez avec le professionnel choisi pour concrétiser votre projet.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials Section -->
+        <section class="py-20">
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl font-bold text-center mb-12">Ce que disent nos clients</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="bg-white rounded-lg shadow-md p-6">
+                        <p class="text-gray-600 mb-4">"ExpertHub m'a permis de trouver rapidement un excellent électricien pour la rénovation de ma maison. Je recommande vivement !"</p>
+                        <div class="flex items-center">
+                            <img src="/api/placeholder/48/48" alt="Client" class="w-12 h-12 rounded-full mr-4">
+                            <div>
+                                <p class="font-semibold">Marie Dupont</p>
+                                <p class="text-gray-500">Propriétaire</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-lg shadow-md p-6">
+                        <p class="text-gray-600 mb-4">"Grâce à ExpertHub, nous avons trouvé une équipe de professionnels pour la construction de notre nouveau bureau. Un service de qualité !"</p>
+                        <div class="flex items-center">
+                            <img src="/api/placeholder/48/48" alt="Client" class="w-12 h-12 rounded-full mr-4">
+                            <div>
+                                <p class="font-semibold">Pierre Martin</p>
+                                <p class="text-gray-500">Entrepreneur</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="bg-indigo-700 text-white py-20">
+            <div class="container mx-auto px-6 text-center">
+                <h2 class="text-3xl font-bold mb-4">Prêt à démarrer votre projet ?</h2>
+                <p class="text-xl mb-8">Rejoignez ExpertHub dès aujourd'hui et trouvez le bon professionnel pour votre projet.</p>
+                <a href="{% url 'professional_list' %}" class="bg-white text-indigo-700 px-6 py-3 rounded-md font-semibold hover:bg-gray-100">Commencer maintenant</a>
+            </div>
+        </section>
+    </main>
+</body>
+</html>
+
+{% endblock %}

@@ -1,0 +1,27 @@
+<div class="bg-white overflow-hidden shadow rounded-lg hover:shadow-md transition-shadow duration-300">
+    <div class="p-5">
+        <div class="flex items-center">
+            <div class="flex-shrink-0">
+                {% if portfolio.project_image %}
+                    <img class="h-16 w-16 object-cover rounded-lg" src="{{ portfolio.project_image.url }}" alt="{{ portfolio.project_title }}">
+                {% else %}
+                    <div class="h-16 w-16 bg-gray-200 rounded-lg flex items-center justify-center">
+                        <span class="text-gray-500 text-xl">No Image</span>
+                    </div>
+                {% endif %}
+            </div>
+            <div class="ml-4 flex-grow">
+                <h4 class="text-lg font-bold text-gray-900">{{ portfolio.project_title }}</h4>
+                <p class="text-sm text-gray-500">{{ portfolio.project_description|truncatechars:10 }}</p>
+            </div>
+        </div>
+        <div class="mt-4 flex justify-between items-center">
+            <a href="{% url 'portfolio_detail' portfolio.id %}" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                Voir les détails
+                <svg class="ml-2 -mr-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                    <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                </svg>
+            </a>
+        </div>
+    </div>
+</div>
